@@ -1,30 +1,78 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="container">
+    <h3>TMDB movie</h3>
+    <form @submit="submitHandler">
+      <div class="common-filter">
+        <label for="filter">Сортировка</label>
+        <select name="filter" id="">
+          <option value="">по популярности</option>
+          <option value="">по названию</option>
+          <option value="">по рейтингу</option>
+          <option value="">по дате релиза</option>
+        </select>
+      </div>
+    </form>
+    <div class="movie">
+      <router-view>
+
+      </router-view>
+
+    </div>
   </div>
-  <router-view/>
 </template>
 
+<script>
+import axios from "axios";
+import MainMovie from "./components/MainMovie.vue";
+export default {
+  components: {
+    "main-movie": MainMovie,
+  },
+  data() {
+    return {
+      movies: [],
+    };
+  },
+  mounted() {
+    this.loadMovies();
+  },
+  methods: {
+    async loadMovies() {
+      const { data } = await axios.get(
+        "https://api.themoviedb.org/3/discover/movie?api_key=dc7f375d88a62637385b4eb0dc3727bd&language=en-US&sort_by=popularity.desc&page=1"
+      );
+      this.movies = data.results;
+    },
+  },
+};
+</script>
+
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.movie{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
-
-#nav {
-  padding: 30px;
+.container {
+  max-width: 1190px;
+  margin-left: auto;
+  margin-right: auto;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.common-filter {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.common-filter label {
+  margin-bottom: 10px;
+}
+.common-filter select {
+  padding: 10px 20px;
+  border-radius: 10px;
+  width: 200px;
+}
+.common-filter option {
+  padding: 10px 20px;
 }
 </style>
