@@ -1,55 +1,31 @@
 <template>
   <div class="container">
     <h3>TMDB movie</h3>
-    <form @submit="submitHandler">
-      <div class="common-filter">
-        <label for="filter">Сортировка</label>
-        <select name="filter" id="">
-          <option value="">по популярности</option>
-          <option value="">по названию</option>
-          <option value="">по рейтингу</option>
-          <option value="">по дате релиза</option>
-        </select>
-      </div>
-    </form>
-    <div class="movie">
-      <router-view>
-
-      </router-view>
-
-    </div>
+    <button @click="getPrevUrl">Back</button>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import axios from "axios";
 import MainMovie from "./components/MainMovie.vue";
 export default {
   components: {
     "main-movie": MainMovie,
   },
   data() {
-    return {
-      movies: [],
-    };
-  },
-  mounted() {
-    this.loadMovies();
+    return {};
   },
   methods: {
-    async loadMovies() {
-      const { data } = await axios.get(
-        "https://api.themoviedb.org/3/discover/movie?api_key=dc7f375d88a62637385b4eb0dc3727bd&language=en-US&sort_by=popularity.desc&page=1"
-      );
-      this.movies = data.results;
-    },
+    getPrevUrl(){
+      this.$router.back()
+    }
   },
 };
 </script>
 
 
 <style>
-.movie{
+.movie {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
