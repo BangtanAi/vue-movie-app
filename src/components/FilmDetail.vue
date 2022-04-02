@@ -34,6 +34,7 @@ export default {
   },
   mounted() {
     this.loadMovie();
+    console.log(this.$route)
   },
 
 };
