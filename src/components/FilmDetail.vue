@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <div class="film-detail">
     <img :src="backdropPath" alt="" />
-    <h4>{{title}}</h4>
-    <span class="detail-text">{{overview}}</span>
-    <!-- {{this.$route.params.id}} -->
+    <h4>{{ title }}</h4>
+    <span class="detail-text">{{ overview }}</span>
   </div>
 </template>
 
@@ -12,9 +11,9 @@ import axios from "axios";
 export default {
   data() {
     return {
-      title: '',
-      overview: '',
-      backdropPath: ''
+      title: "",
+      overview: "",
+      backdropPath: "",
     };
   },
   methods: {
@@ -28,14 +27,30 @@ export default {
         .then((resp) => {
           this.title = resp.data.original_title;
           this.overview = resp.data.overview;
-          this.backdropPath = 'http://image.tmdb.org/t/p/w500' + resp.data.backdrop_path;
+          this.backdropPath =
+            "http://image.tmdb.org/t/p/w500" + resp.data.backdrop_path;
+            console.log(resp.data)
         });
     },
   },
   mounted() {
     this.loadMovie();
-    console.log(this.$route)
+    console.log(this.$route);
   },
-
 };
 </script>
+<style scoped lang="scss">
+.film {
+  &-detail {
+    padding-top: 30px;
+    text-align: center;
+    img{
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    h4{
+      margin-bottom: 15px;
+    }
+  }
+}
+</style>

@@ -14,7 +14,13 @@ export default {
     getPrevUrl() {
       this.$router.back();
     },
+    add(){
+      this.$store.dispatch('asyncAdd', 10)
+    }
   },
+  mounted(){
+    console.log(this.$store)
+  }
 };
 </script>
 
@@ -32,6 +38,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding-bottom: 30px;
 }
 .container {
   max-width: 1190px;
